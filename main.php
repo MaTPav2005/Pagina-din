@@ -27,9 +27,21 @@
             <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" required>
             <hr>
     
-            <label for="ocupacion">Ocupación:</label>
-            <input type="text" id="ocupacion" name="ocupacion" required>
+            <label for="Experiencia_Laboral">Experiencia Laboral:</label>
+            <div id="campos_Experiencia_Laboral">
+            <input type="text" id="Experiencia_Laboral" name="Experiencia_Laboral[]" required>
+                <button type="button" onclick="agregarCampoExperiencia()">Agregar experiencia</button>
+            </div>
             <hr>
+
+
+            <label for="Formacion">Formacion:</label>
+            <div id="camposFormacion">
+            <input type="text" id="Formacion" name="Formacion[]" required>
+                <button type="button" onclick="agregarCampoFormacion()">Agregar formacion</button>
+            </div>
+
+
             
             <label for="contacto">Contacto (teléfono, email):</label><br>
             <div id="campos_contacto">
@@ -58,13 +70,16 @@
             <hr>
 
             <label for="lenguajes">Lenguajes de programación:</label><br>
-            <select id="lenguajes" name="lenguajes" multiple required>
+            <div id="camposlenguajes">
+            <select id="lenguajes" name="lenguajes[]" multiple required>
                 <option value="java">Java</option>
                 <option value="python">Python</option>
                 <option value="javascript">JavaScript</option>
                 <option value="c++">C++</option>
                 <option value="php">PHP</option>
             </select>
+            <button type="button" onclick="agregarCampolenguajes()">Agregar lenguajes</button>
+            </div>
             <hr>
 
             <label for="aptitudes">Aptitudes:</label>
@@ -72,13 +87,13 @@
             <div id="campos_aptitudes">
                 <input list="aptitudes" name="aptitudes[]" required>
                 <datalist id="aptitudes">
-                    <option value="Resolución de problemas">
+                    <option value="Resolución de problemas">    
                     <option value="Comunicación">
                     <option value="Liderazgo">
                     <option value="Trabajo en equipo">
                     <option value="Organización">
                  </datalist>
-                <button type="button" onclick="agregarCampoaptitudes()">Agregar Contacto</button>
+                <button type="button" onclick="agregarCampoaptitudes()">Agregar aptitud</button>
             </div>
             <hr>
 
@@ -114,7 +129,29 @@ function agregarCampoaptitudes() {
     var nuevoCampoAptitudes = document.createElement("div");
     nuevoCampoAptitudes.innerHTML = '<input type="text" name="aptitudes[]" placeholder="escriba otra aptitud      ">';
     divCamposAptitudes.appendChild(nuevoCampoAptitudes);
+}
 
+function agregarCampoExperiencia() {
+    var divCamposExperiencia_Laboral = document.getElementById("campos_Experiencia_Laboral");
+    var nuevoCampoExperiencia_Laboral = document.createElement("div");
+    nuevoCampoExperiencia_Laboral.innerHTML = '<input type="text" name="Experiencia_Laboral[]" placeholder="escriba otra experiencia    ">';
+    divCamposExperiencia_Laboral.appendChild(nuevoCampoExperiencia_Laboral);
+
+}
+
+function agregarCampolenguajes() {
+    var divCamposlenguajes = document.getElementById("camposlenguajes");
+    var nuevoCampolenguajes = document.createElement("div");
+    nuevoCampolenguajes.innerHTML = '<input type="text" name="lenguajes[]" placeholder="escriba lenguajes    ">';
+    divCamposlenguajes.appendChild(nuevoCampolenguajes);
+
+}
+
+function agregarCampoFormacion() {
+    var divCamposFormacion = document.getElementById("camposFormacion");
+    var nuevoCampoFormacion = document.createElement("div");
+    nuevoCampoFormacion.innerHTML = '<input type="text" name="Formacion[]" placeholder="escriba otra Formacion    ">';
+    divCamposFormacion.appendChild(nuevoCampoFormacion);
 
 }
 
@@ -127,16 +164,17 @@ function agregarCampoaptitudes() {
     if(isset($_POST['registro'])){
         $nombre = $_POST['nombre'];
         $fechanacimiento = $_POST['fecha_nacimiento'];
-        $ocupacion = $_POST['ocupacion'];
+        $Experiencia_Laboral = implode(", ", $_POST['Experiencia_Laboral']);
+        $Formacion = implode(", ", $_POST['Formacion']);
         $contacto = implode(", ", $_POST['contacto']);
         $nacionalidad = $_POST['nacionalidad'];
         $ingles = $_POST['ingles'];
-        $lenguajes = $_POST['lenguajes'];
+        $lenguajes = implode(", ", $_POST['lenguajes']);
         $aptitudes = implode(", ", $_POST['aptitudes']);
         $habilidades = $_POST['habilidades'];
         $perfil = $_POST['perfil'];
         
-        $insertarDatos = "INSERT INTO datos1 VALUES('$nombre','$fechanacimiento','$ocupacion','$contacto','$nacionalidad','$ingles','$lenguajes',' $aptitudes',' $habilidades','$perfil')";
+        $insertarDatos = "INSERT INTO datos2 VALUES('$nombre','$fechanacimiento','$Experiencia_Laboral','$Formacion','$contacto','$nacionalidad','$ingles','$lenguajes',' $aptitudes',' $habilidades','$perfil')";
     }
 
     $ejecutarInsertar = mysqli_query ($enlace, $insertarDatos);
